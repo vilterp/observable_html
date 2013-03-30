@@ -1,0 +1,5 @@
+name: observable_html
+dependencies:
+  browser: any
+  observable_datastructures:
+    path: /Users/pete/Dropbox/code/observable_data_structures
