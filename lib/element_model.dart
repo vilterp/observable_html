@@ -41,7 +41,7 @@ abstract class HtmlNodeModel<T extends HtmlNodeValue> extends ObservableTreeNode
 class ElementModel extends HtmlNodeModel<HtmlElementValue> {
 
   ElementModel(HtmlElementValue node, ObservableList<ElementModel> children) : super(node, children) {
-    children.mapped((c) => c.element).bindToList(value.node.children);
+    children.mapped((c) => c.value.node).bindToList(value.node.children);
   }
 
 }
