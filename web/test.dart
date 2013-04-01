@@ -11,14 +11,11 @@ void main() {
   var textNode = new TextNodeModel(clicks.map((val) => val.toString()));
   textNode.bindToContainer(query('#clicks-num'));
   ObservableList<MouseEvent> clickLog = new ObservableList.logEvents(button.onClick.map((_) => new DateTime.now()));
-  var test = new ObservableList.constant([1,2,3]);
-  var test2 = test.mapped((x) => x + 1);
-  // TODO: make this API less ridiculously verbose
-  var children = clickLog.mapped((evt) {
-    return new ElementModel(new HtmlElementValue('li', ObservableMap.EMPTY), new ObservableList.constant([
-      new TextNodeModel(new Signal.constant(evt.toString()))
-    ]));
-  });
-  var clickList = new ElementModel(new HtmlElementValue('ul', ObservableMap.EMPTY), children);
+  // TODO: keep improving this API...
+  var clickList = el('ul', attrsC: {}, children: clickLog.mapped((evt) {
+    return el('li', attrsC: {}, childrenC: [
+      text(constant: evt.toString())
+    ]);
+  }));
   clickList.bindToContainer(query('#click-log-container'));
 }
