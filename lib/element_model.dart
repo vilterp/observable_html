@@ -59,15 +59,22 @@ ElementModel el(String tag, { ObservableMap<String,Option<String>> attrs,
                               ObservableList<HtmlNodeModel> children,
                               Map<String,Option<String>> attrsC,
                               List<HtmlNodeModel> childrenC}) {
-  assert(xor(?attrs, ?attrsC));
-  assert(xor(?children, ?childrenC));
+  // TODO: overloading would be nice here. this is not so great.
+  if(!xor(?attrs, ?attrsC)) {
+    attrsC = {};
+  };
+  if(!xor(?children, ?childrenC)) {
+    childrenC = [];
+  };
   var _attrs = ?attrs ? attrs : new ObservableMap.constant(attrsC);
   var _children = ?children ? children : new ObservableList.constant(childrenC);
   return new ElementModel(new HtmlElementValue(tag, _attrs), _children);
 }
 
 TextNodeModel text({Signal<String> signal, String constant}) {
-  assert(xor(?signal, ?constant));
+  if(!xor(?signal, ?constant)) {
+    throw new ArgumentError();
+  }
   return new TextNodeModel(?signal ? signal : new Signal.constant(constant));
 }
 
